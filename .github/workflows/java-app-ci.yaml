@@ -21,6 +21,7 @@ jobs:
           java-version: 1.8
       - name: Run the Maven verify phase
         run: mvn --batch-mode --update-snapshots test
+        working-directory: kanban-app
       - name: get Artifact version
         id: artmetadata
         run : |
@@ -28,6 +29,7 @@ jobs:
           IMAGE_TAG=ghcr.io/iiglesiasg/kanban-board_kanban-app:$APP_VERSION
           echo "::set-output name=APP_VERSION::${APP_VERSION}"
           echo "::set-output name=IMAGE_TAG::${IMAGE_TAG}"
+        working-directory: kanban-app
       - name: Docker login
         run: |
           echo "${{ secrets.CR_PAT }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
