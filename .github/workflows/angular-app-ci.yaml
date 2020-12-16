@@ -28,10 +28,10 @@ jobs:
           node-version: '12'
 
       - run: npm install
-        working_directory: kanban-ui
-
+        working-directory: kanban-ui
+                
       - run: npm install -g @angular/cli > /dev/null
-        working_directory: kanban-ui
+        working-directory: kanban-ui
 
       - name: get Artifact version
         id: artmetadata
