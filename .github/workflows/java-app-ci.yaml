@@ -37,5 +37,7 @@ jobs:
         run: |
           docker build . --tag {{ steps.artmetadata.outputs.IMAGE_TAG }}
         working-directory: kanban-app
+        env:
+          IMAGE_TAG: {{ steps.artmetadata.outputs.IMAGE_TAG }}
       - name: Docker Push
         run: docker push {{ steps.artmetadata.outputs.IMAGE_TAG }}
