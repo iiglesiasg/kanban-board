@@ -25,7 +25,7 @@ jobs:
       - name: get Artifact version
         id: artmetadata
         run : |
-          APP_VERSION=mvn -q -N org.codehaus.mojo:exec-maven-plugin:3.0.0:exec -Dexec.executable='echo' -Dexec.args='${project.version}'
+          APP_VERSION=$(mvn -q -N org.codehaus.mojo:exec-maven-plugin:3.0.0:exec -Dexec.executable='echo' -Dexec.args='${project.version}')
           IMAGE_TAG=ghcr.io/iiglesiasg/kanban-board_kanban-app:$APP_VERSION
           echo "::set-output name=APP_VERSION::${APP_VERSION}"
           echo "::set-output name=IMAGE_TAG::${IMAGE_TAG}"
