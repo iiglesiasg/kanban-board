@@ -32,7 +32,7 @@ jobs:
           IMAGE_TAG=ghcr.io/iiglesiasg/kanban-board_kanban-app:${APP_VERSION}
           echo $IMAGE_TAG
           echo "::set-output name=APP_VERSION::${APP_VERSION}"
-          echo "::set-output name=IMAGE::${IMAGE_TAG}"
+          echo "::set-output name=IMAGE_TAG::${IMAGE_TAG}"
         working-directory: kanban-app
 
       - name: Docker login
@@ -42,9 +42,10 @@ jobs:
       - name: Docker build
         run: |
           docker build . --tag ${IMAGE_TAG}
-        env:
-          IMAGE_TAG: {{ steps.artmetadata.outputs.IMAGE }}
         working-directory: kanban-app
+        env:
+          IMAGE_TAG: ${{ steps.artmetadata.outputs.IMAGE_TAG }}
+        
 
       - name: Docker Push
         run: docker push {{ steps.artmetadata.outputs.IMAGE_TAG }}
