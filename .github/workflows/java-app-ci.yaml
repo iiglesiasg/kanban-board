@@ -2,6 +2,7 @@
 name: JavaApp CI Flow
 
 on:
+  workflow_dispatch:
   pull_request:
     branches:
       - "master"
