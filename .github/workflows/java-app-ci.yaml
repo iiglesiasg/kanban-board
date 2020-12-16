@@ -48,4 +48,6 @@ jobs:
         
 
       - name: Docker Push
-        run: docker push {{ steps.artmetadata.outputs.IMAGE_TAG }}
+        run: docker push ${IMAGE_TAG}
+        env:
+          IMAGE_TAG: ${{ steps.artmetadata.outputs.IMAGE_TAG }}
