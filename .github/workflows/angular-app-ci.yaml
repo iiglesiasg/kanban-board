@@ -26,10 +26,13 @@ jobs:
       - uses: actions/setup-node@v2-beta
         with:
           node-version: '12'
+
       - run: npm install
         working_directory: kanban-ui
+
       - run: npm install -g @angular/cli > /dev/null
         working_directory: kanban-ui
+
       - name: get Artifact version
         id: artmetadata
         run: |
@@ -39,6 +42,7 @@ jobs:
           echo "::set-output name=APP_VERSION::${APP_VERSION}"
           echo "::set-output name=IMAGE_TAG::${IMAGE_TAG}"
         working-directory: kanban-ui
+
       - name: Docker login
         run: |
           echo "${{ secrets.CR_PAT }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
