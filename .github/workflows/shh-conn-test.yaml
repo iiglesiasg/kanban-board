@@ -1,0 +1,25 @@
+---
+name: Ssh Connection Test
+
+on:
+  workflow_dispatch:
+
+env:
+  HOST: '168.119.238.196'
+  USERNAME: 'ningu'
+jobs:
+  promotion_branch:
+    name: ssh-test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Connect to server apply commands
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ env.HOST }}
+          username: ${{ env.USERNAME }}
+          key: ${{ secrets.PAAK_SERVER_SSH_RSA_KEY }}
+          script: |
+            ssh-keyscan github.com >> ~/.ssh/known_hosts
+            pwd
+            git clone git@github.com:iiglesiasg/kanban-board.git

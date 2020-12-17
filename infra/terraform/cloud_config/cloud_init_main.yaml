@@ -19,6 +19,7 @@ packages:
   - unzip
   - openjdk-11-jdk
   - openjdk-11-jre
+  - git
 package_update: true
 package_upgrade: true
 
