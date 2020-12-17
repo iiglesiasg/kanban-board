@@ -1,5 +1,5 @@
 ---
-name: Ssh Connection Test
+name: Install CD Control Loop
 
 on:
   workflow_dispatch:
@@ -32,11 +32,11 @@ jobs:
           username: ${{ env.USERNAME }}
           key: ${{ secrets.PAAK_SERVER_SSH_RSA_KEY }}
           script: |
-            sudo chmod 600 /home/ningu/.ssh/id_rsa
+            sudo chmod 600 ~/.ssh/id_rsa
             ssh-keyscan github.com >> ~/.ssh/known_hosts
             git clone git@github.com:iiglesiasg/kanban-board.git --single-branch
             sudo mv kanban-board/docker-compose.yml /etc/docker/compose/kanban-board
             sudo systemctl start docker-compose@kanban-board
-            sudo crontab /etc/docker/compose/kanban-board/crontab-job
             sudo chmod +x /etc/docker/compose/kanban-board/cd-convergence.sh
+            sudo crontab /etc/docker/compose/kanban-board/crontab-job
 

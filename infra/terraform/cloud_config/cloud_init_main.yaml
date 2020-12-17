@@ -39,26 +39,13 @@ write_files:
           UPSTREAM_TAG=$(echo $UPSTREAM_IMAGE | grep $DOCKER_NAME | cut -d ':' -f2-)
           docker pull $UPSTREAM_IMAGE
           echo "no iguales"
-          ## su ningu
+          su ningu
           cd ~/kanban-board
           git pull
           sed -i 's/${DOCKER_NAME}:${CURRENT_TAG}/${DOCKER_NAME}:${UPSTREAM_TAG}/g' docker-compose.yml
-
+          exit
       fi;
     path: /etc/docker/compose/kanban-board/cd-convergence.sh
-#  - content: |
-#      kind: EncryptionConfig
-#      apiVersion: v1
-#      resources:
-#        - resources:
-#            - secrets
-#          providers:
-#            - aescbc:
-#                keys:
-#                  - name: key1
-#                    secret: Ja900xQlYlJHQ5wmsuBDbnfUNi4en1+4POR5mJxxfr8=
-#            - identity: { }
-#    path: /home/ningu/encryption-config.yaml
   - content: |
       [Unit]
       Description=%i service with docker compose
@@ -78,7 +65,7 @@ write_files:
   - content: |
       * * * * * /etc/docker/compose/kanban-board/convergence.sh kanban-board_kanban-ui
       * * * * * /etc/docker/compose/kanban-board/convergence.sh kanban-board_kanban-app
-      path: /etc/docker/compose/kanban-board/crontab-job
+    path: /etc/docker/compose/kanban-board/crontab-job
 
 runcmd:
   - swapoff -a
