@@ -24,7 +24,7 @@ jobs:
           username: ${{ env.USERNAME }}
           key: ${{ secrets.PAAK_SERVER_SSH_RSA_KEY }}
           source: "id_rsa"
-          target: "~/.ssh/id_rsa"
+          target: "~/.ssh/"
       - name: Connect to server apply commands
         uses: appleboy/ssh-action@master
         with:
