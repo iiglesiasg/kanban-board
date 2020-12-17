@@ -20,10 +20,32 @@ packages:
   - openjdk-11-jdk
   - openjdk-11-jre
   - git
+  - jq
 package_update: true
 package_upgrade: true
 
 write_files:
+  - content: |
+      #!/bin/bash
+      DOCKER_NAME=$1
+      CURRENT_TAG=$(cat /etc/docker/compose/kanban-board/docker-compose.yml | grep $DOCKER_NAME | cut -d ':' -f3-)
+
+      REMOTE_SHA=$(curl --silent -L https://github.com/users/iiglesiasg/packages/container/${DOCKER_NAME}/ | grep "code>sha256:" | cut -d ':' -f2- | rev | cut -d '<' -f2- | rev)
+      DAEMON_SHA=$(docker inspect ghcr.io/iiglesiasg/${DOCKER_NAME}:${CURRENT_TAG} | jq '.[].RepoDigests' | grep ghcr.io/iiglesiasg/${DOCKER_NAME} | cut -d ':' -f2- | tr -d '"')
+
+      if [[ $DAEMON_SHA != $REMOTE_SHA ]];
+      then
+          UPSTREAM_IMAGE=$(curl --silent -L https://github.com/users/iiglesiasg/packages/container/${DOCKER_NAME} | grep "docker pull ghcr.io/iiglesiasg/${DOCKER_NAME}" | cut -d '"' -f2- | tr -d '"' | tr -d '>'| cut -d ' ' -f3-)
+          UPSTREAM_TAG=$(echo $UPSTREAM_IMAGE | grep $DOCKER_NAME | cut -d ':' -f2-)
+          docker pull $UPSTREAM_IMAGE
+          echo "no iguales"
+          ## su ningu
+          cd ~/kanban-board
+          git pull
+          sed -i 's/${DOCKER_NAME}:${CURRENT_TAG}/${DOCKER_NAME}:${UPSTREAM_TAG}/g' docker-compose.yml
+
+      fi;
+    path: /etc/docker/compose/kanban-board/cd-convergence.sh
 #  - content: |
 #      kind: EncryptionConfig
 #      apiVersion: v1
@@ -53,6 +75,10 @@ write_files:
       [Install]
       WantedBy=multi-user.target
     path: /etc/systemd/system/docker-compose@.service
+  - content: |
+      * * * * * /etc/docker/compose/kanban-board/convergence.sh kanban-board_kanban-ui
+      * * * * * /etc/docker/compose/kanban-board/convergence.sh kanban-board_kanban-app
+      path: /etc/docker/compose/kanban-board/crontab-job
 
 runcmd:
   - swapoff -a
