@@ -32,6 +32,7 @@ jobs:
           username: ${{ env.USERNAME }}
           key: ${{ secrets.PAAK_SERVER_SSH_RSA_KEY }}
           script: |
+            sudo chmod 600 /home/ningu/.ssh/id_rsa
             ssh-keyscan github.com >> ~/.ssh/known_hosts
             git clone git@github.com:iiglesiasg/kanban-board.git --single-branch
             sudo mv kanban-board/docker-compose.yml /etc/docker/compose/kanban-board
