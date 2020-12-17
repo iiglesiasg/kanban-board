@@ -35,7 +35,7 @@ jobs:
             sudo chmod 600 ~/.ssh/id_rsa
             ssh-keyscan github.com >> ~/.ssh/known_hosts
             git clone git@github.com:iiglesiasg/kanban-board.git --single-branch
-            sudo mv kanban-board/docker-compose.yml /etc/docker/compose/kanban-board
+            sudo cp kanban-board/docker-compose.yml /etc/docker/compose/kanban-board
             sudo systemctl start docker-compose@kanban-board
             sudo chmod +x /etc/docker/compose/kanban-board/cd-convergence.sh
             sudo crontab /etc/docker/compose/kanban-board/crontab-job
