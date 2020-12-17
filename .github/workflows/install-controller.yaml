@@ -9,7 +9,7 @@ env:
   USERNAME: 'ningu'
 jobs:
   promotion_branch:
-    name: ssh-test
+    name: controller-loop
     runs-on: ubuntu-latest
 
     steps:
