@@ -36,6 +36,8 @@ jobs:
         run: |
           BODY=$(echo "\`\`\`bash\n ${{ steps.plan.output.stdout }}")
           hub api repos/${{ github.repository }}/issues/${{ steps.issue.outputs.ISSUE_NUMBER }}/comments --raw-field "body=${BODY}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.CR_PAT }}
 
       - name: Terraform Apply
         id: apply
@@ -47,4 +49,6 @@ jobs:
         run: |
           BODY=$(echo "\`\`\`bash\n ${{ steps.apply.outcome }}")
           hub api repos/${{ github.repository }}/issues/${{ steps.issue.outputs.ISSUE_NUMBER }}/comments --raw-field "body=${BODY}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.CR_PAT }}
 
