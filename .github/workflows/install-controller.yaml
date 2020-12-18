@@ -6,7 +6,7 @@ on:
 
 env:
   HOST: '168.119.238.196'
-  USERNAME: 'ningu'
+  USERNAME: 'root'
 jobs:
   promotion_branch:
     name: controller-loop

@@ -39,11 +39,11 @@ write_files:
           UPSTREAM_TAG=$(echo $UPSTREAM_IMAGE | grep $DOCKER_NAME | cut -d ':' -f2-)
           docker pull $UPSTREAM_IMAGE
           echo "no iguales"
-          su ningu
           cd ~/kanban-board
           git pull
           sed -i "s/${DOCKER_NAME}:${CURRENT_TAG}/${DOCKER_NAME}:${UPSTREAM_TAG}/g" /etc/docker/compose/kanban-board/docker-compose.yml
-          sudo su -
+          cp /etc/docker/compose/kanban-board/docker-compose.yml ~/kanban_board/docker-compose.yml
+
       fi;
     path: /etc/docker/compose/kanban-board/cd-convergence.sh
   - content: |
