@@ -39,4 +39,6 @@ jobs:
             sudo systemctl start docker-compose@kanban-board
             sudo chmod +x /etc/docker/compose/kanban-board/cd-convergence.sh
             sudo crontab /etc/docker/compose/kanban-board/crontab-job
+            git config --global user.name ${{ github.actor }}
+            git config --global user.email 
 

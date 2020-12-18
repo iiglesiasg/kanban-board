@@ -63,3 +63,14 @@ jobs:
         run: docker push ${IMAGE_TAG}
         env:
           IMAGE_TAG: ${{ steps.artmetadata.outputs.IMAGE_TAG }}
+
+
+      - name: Merge Master
+        run: |
+          git config user.name ${{ github.actor }}
+          git checkout master
+          git add .
+          git commit -m "${IMAGE_TAG} Published"
+          git push
+        env:
+          IMAGE_TAG: ${{ steps.artmetadata.outputs.IMAGE_TAG }}
