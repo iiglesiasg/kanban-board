@@ -17,7 +17,9 @@ jobs:
       - name: Create Github Issue
         id: issue
         run: |
-          ISSUE_NUMBER=$(hub issue create -m 'Creation of Vm in Hetzner Cloud' -a ${{ github.actor }})
+          ISSUE=$(hub issue create -m 'Creation of Vm in Hetzner Cloud' -a ${{ github.actor }})
+          ISSUE_NUMBER=$(basename "$ISSUE")
+          echo "::set-output name=ISSUE_NUMBER::${ISSUE}"
           echo "::set-output name=ISSUE_NUMBER::${ISSUE_NUMBER}"
         env:
           GITHUB_TOKEN: ${{ secrets.CR_PAT }}
@@ -27,11 +29,22 @@ jobs:
         working-directory: infra/terraform
       - id: plan
         run: terraform plan --var=hcloud_token=${{ secrets.HCLOUD_TOKEN }} -no-color
+        continue-on-error: true
         working-directory: infra/terraform
 
       - name: comment issue
         run: |
           BODY=$(echo "\`\`\`bash\n ${{ steps.plan.output.stdout }}")
-          hub api repos/${GITHUB_REPOSITORY}/issues/${{ steps.issue.outputs.ISSUE_NUMBER }}/comments --raw-field "body=${BODY}"
+          hub api repos/${{ github.repository }}/issues/${{ steps.issue.outputs.ISSUE_NUMBER }}/comments --raw-field "body=${BODY}"
 
+      - name: Terraform Apply
+        id: apply
+        run: terraform apply --var=hcloud_token=${{ secrets.HCLOUD_TOKEN }} -no-color
+        continue-on-error: true
+        working-directory: infra/terraform
+
+      - name: comment issue
+        run: |
+          BODY=$(echo "\`\`\`bash\n ${{ steps.apply.outcome }}")
+          hub api repos/${{ github.repository }}/issues/${{ steps.issue.outputs.ISSUE_NUMBER }}/comments --raw-field "body=${BODY}"
 
