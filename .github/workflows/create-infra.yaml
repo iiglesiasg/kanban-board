@@ -30,6 +30,7 @@ jobs:
       - id: plan
         run: terraform plan --var=hcloud_token=${{ secrets.HCLOUD_TOKEN }} -no-color
         continue-on-error: true
+        terraform_wrapper: true
         working-directory: infra/terraform
 
       - name: comment issue
@@ -41,7 +42,7 @@ jobs:
 
       - name: Terraform Apply
         id: apply
-        run: terraform apply --var=hcloud_token=${{ secrets.HCLOUD_TOKEN }} -no-color
+        run: terraform apply --var=hcloud_token=${{ secrets.HCLOUD_TOKEN }} -no-color --auto-approve
         continue-on-error: true
         working-directory: infra/terraform
 
