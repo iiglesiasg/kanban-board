@@ -29,13 +29,12 @@ jobs:
         working-directory: infra/terraform
       - id: plan
         run: terraform plan --var=hcloud_token=${{ secrets.HCLOUD_TOKEN }} -no-color
-        continue-on-error: true
-        terraform_wrapper: true
+        continue-on-error: true        
         working-directory: infra/terraform
 
       - name: comment issue
         run: |
-          BODY=$(echo "\`\`\`bash\n ${{ steps.plan.output.stdout }}")
+          BODY=$(echo "\`\`\`bash\n ${{ steps.plan.outputs.stdout }}")
           hub api repos/${{ github.repository }}/issues/${{ steps.issue.outputs.ISSUE_NUMBER }}/comments --raw-field "body=${BODY}"
         env:
           GITHUB_TOKEN: ${{ secrets.CR_PAT }}
