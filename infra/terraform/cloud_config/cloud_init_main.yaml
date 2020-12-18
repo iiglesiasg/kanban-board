@@ -38,12 +38,10 @@ write_files:
           UPSTREAM_IMAGE=$(curl --silent -L https://github.com/users/iiglesiasg/packages/container/${DOCKER_NAME} | grep "docker pull ghcr.io/iiglesiasg/${DOCKER_NAME}" | cut -d '"' -f2- | tr -d '"' | tr -d '>'| cut -d ' ' -f3-)
           UPSTREAM_TAG=$(echo $UPSTREAM_IMAGE | grep $DOCKER_NAME | cut -d ':' -f2-)
           docker pull $UPSTREAM_IMAGE
-          echo "no iguales"
           cd ~/kanban-board
           git pull
           sed -i "s/${DOCKER_NAME}:${CURRENT_TAG}/${DOCKER_NAME}:${UPSTREAM_TAG}/g" /etc/docker/compose/kanban-board/docker-compose.yml
-          cp /etc/docker/compose/kanban-board/docker-compose.yml ~/kanban_board/docker-compose.yml
-
+          cp /etc/docker/compose/kanban-board/docker-compose.yml ~/kanban-board/docker-compose.yml
       fi;
     path: /etc/docker/compose/kanban-board/cd-convergence.sh
   - content: |
@@ -70,9 +68,11 @@ write_files:
 runcmd:
   - swapoff -a
   - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
+  - sudo apt-add-repository https://cli.github.com/packages
   - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
   - sudo apt update
-  - sudo apt install docker-ce -y
+  - sudo apt install docker-ce gh -y
   - sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
   - sudo chmod +x /usr/local/bin/docker-compose
   - sudo sysctl -w vm.max_map_count=262144
