@@ -1,0 +1,36 @@
+---
+name: Create Infra
+
+on:
+  workflow_dispatch:
+
+env:
+  HOST: '168.119.238.196'
+  USERNAME: 'ningu'
+jobs:
+  promotion_branch:
+    name: terraform
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create Github Issue
+        id: issue
+        run: |
+          ISSUE_NUMBER=$(hub issue create -m 'Creation of Vm in Hetzner Cloud' -a ${{ github.actor }})
+          echo "::set-output name=ISSUE_NUMBER::${ISSUE_NUMBER}"
+       env:
+         GITHUB_TOKEN: ${{ secrets.CR_PAT }}
+
+      - uses: hashicorp/setup-terraform@v1
+      - run: terraform init
+        working-directory: infra/terraform
+      - id: plan
+        run: terraform plan -no-color
+        working-directory: infra/terraform
+
+      - name: comment issue
+        run: |
+          BODY=$(echo "\`\`\`bash\n ${{ steps.plan.output.stdout }}")
+          hub api repos/${GITHUB_REPOSITORY}/issues/${{ steps.issue.outputs.ISSUE_NUMBER }}/comments --raw-field "body=${BODY}"
+
+

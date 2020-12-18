@@ -42,8 +42,8 @@ write_files:
           su ningu
           cd ~/kanban-board
           git pull
-          sed -i "s/${DOCKER_NAME}:${CURRENT_TAG}/${DOCKER_NAME}:${UPSTREAM_TAG}/g" docker-compose.yml
-          exit
+          sed -i "s/${DOCKER_NAME}:${CURRENT_TAG}/${DOCKER_NAME}:${UPSTREAM_TAG}/g" /etc/docker/compose/kanban-board/docker-compose.yml
+          sudo su -
       fi;
     path: /etc/docker/compose/kanban-board/cd-convergence.sh
   - content: |
