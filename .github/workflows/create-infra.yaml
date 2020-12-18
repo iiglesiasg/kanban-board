@@ -67,7 +67,7 @@ jobs:
       - uses: gliech/create-github-secret-action@v1
         with:
           name: PAAK_SERVER_IP
-          value: ${{ steps.ip.outputs.PAAK_SERVER_IP
+          value: ${{ steps.ip.outputs.PAAK_SERVER_IP }}
           pa_token: ${{ secrets.CR_PAT }}
 
 
