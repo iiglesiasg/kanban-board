@@ -24,6 +24,18 @@ jobs:
       - name: Run the Maven verify phase
         run: mvn --batch-mode --update-snapshots test
         working-directory: kanban-app
+      - name: Call Sonar
+        run: |
+          mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar \
+            -Dsonar.projectName=paak \
+            -Dsonar.password=$SONAR_PASSWORD \
+            -Dsonar.host.url=http://$SONAR_IP:9000/ \
+            -Dsonar.junit.reportsPath=target/surefire-reports \
+            -Dsonar.jacoco.reportPath=target/jacoco.exec
+        env:
+          SONAR_PASSWORD: ${{ secret.SONAR_PASSWORD }}
+          SONAR_IP: ${{ secrets.PAAK_SERVER_IP }}
+        working-directory: kanban-app
 
       - name: get Artifact version
         id: artmetadata
