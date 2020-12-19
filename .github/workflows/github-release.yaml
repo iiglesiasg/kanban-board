@@ -21,6 +21,7 @@ jobs:
         id: new-version
         run: |
           git describe --tags --abbrev=0
+          git describe --tags 
           OLD_TAG=$(git describe --tags --abbrev=0)
           OLD_MAYOR_VERSION=$(git describe --tags --abbrev=0 | rev | cut -d '.' -f2- | rev)
           OLD_MINOR_VERSION=$(echo $OLD_TAG | cut -d '.' -f2-)
