@@ -39,3 +39,4 @@ services:
 
 volumes:
   kanban-data:
+
