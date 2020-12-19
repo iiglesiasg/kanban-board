@@ -23,6 +23,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v2-beta
         with:
           node-version: '12'
@@ -57,5 +59,15 @@ jobs:
 
       - name: Docker Push
         run: docker push ${IMAGE_TAG}
+        env:
+          IMAGE_TAG: ${{ steps.artmetadata.outputs.IMAGE_TAG }}
+
+      - name: Merge Master
+        run: |
+          git config user.name ${{ github.actor }}
+          git checkout master
+          git add .
+          git commit -m "${IMAGE_TAG} Published"
+          git push
         env:
           IMAGE_TAG: ${{ steps.artmetadata.outputs.IMAGE_TAG }}
