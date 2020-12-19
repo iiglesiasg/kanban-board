@@ -1,0 +1,19 @@
+---
+name: Github Release
+
+on:
+  push:
+    branches:
+      - "master"
+    paths:
+      - "docker-compose.yml"
+
+
+jobs:
+  promotion_branch:
+    name: Release
+    ## TODO: no latest!!!
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
