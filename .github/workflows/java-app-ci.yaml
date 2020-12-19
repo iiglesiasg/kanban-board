@@ -69,8 +69,11 @@ jobs:
 
       - name: Merge Master
         run: |
+          cp -r kanban-app $HOME/temp
           git config user.name ${{ github.actor }}
           git checkout master
+          rm -rf kanban-app/*
+          cp -r $HOME/temp/* ./kanban-app
           git add .
           git commit -m "${IMAGE_TAG} Published"
           git push
