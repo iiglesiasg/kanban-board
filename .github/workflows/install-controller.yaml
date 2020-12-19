@@ -41,4 +41,7 @@ jobs:
             sudo crontab /etc/docker/compose/kanban-board/crontab-job
             git config --global user.name ${{ github.actor }}
             git config --global user.email "ningunpenk@hotmail.com"
+            cd kanban-board
+            git tag v0.0 master
+            git push origin v0.0
 
