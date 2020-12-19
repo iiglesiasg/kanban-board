@@ -45,3 +45,18 @@ jobs:
             git tag v0.0 master
             git push origin v0.0
 
+      - uses: actions/checkout@v2
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: v0.0
+          release_name: Release v0.0
+          body: |
+            Changes in this Release
+            - Install Deploy Controller
+          draft: false
+          prerelease: false
+
+

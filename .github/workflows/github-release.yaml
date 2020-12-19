@@ -17,13 +17,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch: 0
       - name: Calculate Next Release
         id: new-version
         run: |
           git describe --tags --abbrev=0
           git describe --tags 
-          OLD_TAG=$(git describe --tags --abbrev=0)
-          OLD_MAYOR_VERSION=$(git describe --tags --abbrev=0 | rev | cut -d '.' -f2- | rev)
+          OLD_TAG=$(git tag | tail -1)
+          OLD_MAYOR_VERSION=$(echo "$OLD_TAG" | rev | cut -d '.' -f2- | rev)
           OLD_MINOR_VERSION=$(echo $OLD_TAG | cut -d '.' -f2-)
           NEW_MINOR_VERSION=$(($OLD_MINOR_VERSION + 1))
           NEW_TAG=$(echo "${OLD_MAYOR_VERSION}.${NEW_MINOR_VERSION}")
