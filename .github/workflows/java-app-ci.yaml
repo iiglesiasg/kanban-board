@@ -33,7 +33,7 @@ jobs:
             -Dsonar.junit.reportsPath=target/surefire-reports \
             -Dsonar.jacoco.reportPath=target/jacoco.exec
         env:
-          SONAR_PASSWORD: ${{ secret.SONAR_PASSWORD }}
+          SONAR_PASSWORD: ${{ secrets.SONAR_PASSWORD }}
           SONAR_IP: ${{ secrets.PAAK_SERVER_IP }}
         working-directory: kanban-app
 
