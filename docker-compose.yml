@@ -36,7 +36,6 @@ services:
     links:
       - kanban-app
 
-
 volumes:
   kanban-data:
 
