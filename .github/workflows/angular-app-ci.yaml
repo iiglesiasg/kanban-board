@@ -62,10 +62,14 @@ jobs:
         env:
           IMAGE_TAG: ${{ steps.artmetadata.outputs.IMAGE_TAG }}
 
+
       - name: Merge Master
         run: |
+          cp -r kanban-ui $HOME/temp
           git config user.name ${{ github.actor }}
           git checkout master
+          rm -rf kanban-ui/*
+          cp -r $HOME/temp/* ./kanban-ui
           git add .
           git commit -m "${IMAGE_TAG} Published"
           git push
