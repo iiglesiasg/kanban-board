@@ -29,7 +29,7 @@ services:
 
   kanban-ui:
 ##    build: ./kanban-ui
-    image: ghcr.io/iiglesiasg/kanban-board_kanban-ui:0.0.0
+    image: ghcr.io/iiglesiasg/kanban-board_kanban-ui:0.0.1
     container_name: kanban-ui
     ports:
       - 4200:80
