@@ -15,7 +15,7 @@ services:
 
   kanban-app:
 ##    build: ./kanban-app
-    image: ghcr.io/iiglesiasg/kanban-board_kanban-app:0.0.2-snapshot
+    image: ghcr.io/iiglesiasg/kanban-board_kanban-app:0.0.3-snapshot
     container_name: kanban-app
     environment:
       - DB_SERVER=kanban-postgres
@@ -38,5 +38,4 @@ services:
 
 volumes:
   kanban-data:
-  
 
