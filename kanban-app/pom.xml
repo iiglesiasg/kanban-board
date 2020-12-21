@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.wkrzywiec.medium</groupId>
 	<artifactId>kanban-app</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<name>kanban-app</name>
 	<description>Backend app for Kanban app</description>
 
