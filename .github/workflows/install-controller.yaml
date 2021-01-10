@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 env:
-  HOST: '168.119.238.196'
+  HOST: '188.34.198.69'
   USERNAME: 'root'
 jobs:
   promotion_branch:
