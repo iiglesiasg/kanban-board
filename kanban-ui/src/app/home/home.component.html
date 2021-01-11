@@ -1,17 +1,16 @@
 <div class="page-container">
-  <div class="page-title">
-    <h1>Kanban Boards: Inigo Rules CICD</h1>
-  </div>
-  <div>
-    <button mat-raised-button (click)="openDialogForNewKanban()">+ Create Kanban</button>
-  </div>
-  
-  <div class="main-card">
-    <mat-nav-list>
-      <a mat-list-item *ngFor="let kanban of kanbanList" routerLink="/kanbans/{{kanban.id}}"> 
-        <p class="kanban-title">{{kanban.title}}</p>
-      </a>
-    </mat-nav-list>
-  </div>
-</div>
+    <div class="page-title">
+        <h1>Kanban Boards: Inigo & Paack CICD</h1>
+    </div>
+    <div>
+        <button mat-raised-button (click)="openDialogForNewKanban()">+ Create Kanban</button>
+    </div>
 
+    <div class="main-card">
+        <mat-nav-list>
+            <a mat-list-item *ngFor="let kanban of kanbanList" routerLink="/kanbans/{{kanban.id}}">
+                <p class="kanban-title">{{kanban.title}}</p>
+            </a>
+        </mat-nav-list>
+    </div>
+</div>
